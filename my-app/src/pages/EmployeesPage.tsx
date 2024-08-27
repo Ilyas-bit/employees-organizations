@@ -8,6 +8,7 @@ import {
   Employee,
   deleteEmployee,
 } from "../features/organizations/organizationsSlice";
+import { selectOrganizationById } from "../features/organizations/selectors";
 
 const { Title } = Typography;
 
@@ -15,9 +16,13 @@ const EmployeesPage: React.FC = () => {
   const { organizationId } = useParams<{ organizationId: string }>();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null);
+
   const employees = useSelector(
     selectEmployeesByOrganizationId(organizationId!)
   );
+
+  const organization = useSelector(selectOrganizationById(organizationId!));
+
   const dispatch = useDispatch();
 
   const showAddModal = () => {
@@ -42,7 +47,7 @@ const EmployeesPage: React.FC = () => {
   return (
     <div style={{ padding: "24px" }}>
       <Title level={2} style={{ marginBottom: "24px" }}>
-        Employees of Organization {organizationId}
+        Employees of Organization {organization?.name || "Loading..."}
       </Title>
       <Button
         type="primary"

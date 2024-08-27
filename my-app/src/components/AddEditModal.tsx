@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Modal, Form, Input, Button } from "antd";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -17,7 +17,7 @@ interface AddEditModalProps {
   mode: "addOrganization" | "editOrganization" | "addEmployee" | "editEmployee";
   existingOrganization?: Organization;
   existingEmployee?: Employee;
-  organizationId?: string; // Нужно для добавления сотрудников
+  organizationId?: string;
 }
 
 const AddEditModal: React.FC<AddEditModalProps> = ({
@@ -70,10 +70,10 @@ const AddEditModal: React.FC<AddEditModalProps> = ({
       );
     }
     onClose();
-    reset(); // Сброс формы после отправки
+    reset();
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (mode === "editOrganization" && existingOrganization) {
       reset(existingOrganization);
     } else if (mode === "editEmployee" && existingEmployee) {
@@ -86,7 +86,7 @@ const AddEditModal: React.FC<AddEditModalProps> = ({
   return (
     <Modal
       title={mode.includes("edit") ? "Edit" : "Add"}
-      visible={isVisible}
+      open={isVisible}
       onCancel={onClose}
       footer={null}
     >

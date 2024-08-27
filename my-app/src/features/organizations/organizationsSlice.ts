@@ -66,7 +66,7 @@ const organizationsAndEmployeesSlice = createSlice({
         (org) => org.id === action.payload.organizationId
       );
       if (org) {
-        org.employees.push({ ...action.payload.employee, id: nanoid() }); // Ensure unique employee IDs
+        org.employees.push({ ...action.payload.employee, id: nanoid() });
       }
     },
     editEmployee: (
